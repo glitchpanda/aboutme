@@ -1,0 +1,48 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { format } from "date-fns";
+import { client } from "../../lib/sanity";
+
+const query = `*[_type == "post"] { title, slug, publishedAt }`;
+interface Post {
+  slug: { current: string };
+  title: string;
+  publishedAt: string | number | Date;
+}
+async function fetchPosts(): Promise<Post[]> {
+  try {
+    const posts = await client.fetch(query);
+    return posts;
+  } catch (error) {
+    console.error("Error fetching posts:", error);
+    return []; // Return an empty array on error
+  }
+}
+const allPosts = await fetchPosts();
+---
+<Layout title="My Blog">
+  <ul class="instructions-container">
+    <h2 class="section-title">Blog</h2>
+    {
+      allPosts.length > 0 ? (
+        allPosts.map((post) => (
+          <li class="instructions">
+            <h2>
+              <span class="text-gradient">
+                <a href={`/blog/${post.slug.current}`}>
+                  {post.title}
+                </a>
+              </span>
+            </h2>
+            <p class="date">
+              Published on:{" "}
+              {format(new Date(post.publishedAt), "dd/MM/yyyy")}
+            </p>
+          </li>
+        ))
+      ) : (
+        <p>No posts found.</p>
+      )
+    }
+  </ul>
+</Layout>

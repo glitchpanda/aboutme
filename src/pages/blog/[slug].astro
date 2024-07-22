@@ -1,0 +1,56 @@
+---
+import type { GetStaticPathsResult } from "astro";
+import Layout from "../../layouts/Layout.astro";
+import { format } from "date-fns";
+import { client } from "../../lib/sanity";
+import { PortableText } from "astro-portabletext";
+
+
+const query = `*[_type == "post" && slug.current == $slug][0] {
+  title,
+  slug,
+  publishedAt,
+  body
+}`;
+async function fetchPostData(slug: string | number | undefined) {
+  const post = await client.fetch(query, { slug });
+  if (!post) {
+    return new Response(null, { status: 404, statusText: "Not found" });
+  }
+  return post;
+}
+export async function getStaticPaths(): Promise<GetStaticPathsResult> {
+  const slugsQuery = `*[_type == "post"] { slug }`;
+  const slugs = await client.fetch(slugsQuery);
+  return slugs.map((slug: { slug: { current: any } }) => ({
+    params: { slug: slug.slug.current },
+  }));
+}
+const post = await fetchPostData(Astro.params.slug);
+---
+
+<Layout title={post?.title || "Not Found"}>
+  <a href="/blog" class="btn btn-primary" style="margin-left: 10px;"> Back to Blog</a>
+
+  <div class="instructions-container">
+    <h1>
+      {post instanceof Response ? "Post Not Found" : post.title}
+    </h1>
+    <article class="instructions">
+      {
+        post instanceof Response ? (
+          <div>Post not found</div>
+        ) : (
+          <>
+            <p class="date">
+              Published on: {format(new Date(post.publishedAt), "dd/MM/yyyy")}
+            </p>
+            <div class="content">
+              <PortableText value={post.body} />
+            </div>
+          </>
+        )
+      }
+    </article>
+  </div></Layout
+>

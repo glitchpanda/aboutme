@@ -1,0 +1,296 @@
+---
+interface Props {
+	title: string;
+}
+import { FaLinkedin } from 'react-icons/fa'; 
+import { FaEnvelope } from 'react-icons/fa'; 
+import { FaDownload } from 'react-icons/fa'; 
+import { Image } from "astro:assets";
+import me from "../assets/fox.png";
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Astro description" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+	</head>
+	<body>
+		<main>
+			<div
+				class="title-image"
+				style="display: flex; align-items: center;"
+			>
+				<a href="/">
+					<h1>
+						<Image src={me} alt="Fox" loading="eager" />
+						<span class="title-text">
+							Benjamin <span class="text-gradient">Ali</span>
+						</span>
+					</h1>
+				</a>
+			</div>
+			<slot />
+			<footer
+				class="button-links"
+				style="display: flex; flex-wrap: wrap; justify-content: center;"
+			>
+			
+			<li style="margin: 5px;">
+					<a
+						href="https://www.linkedin.com/in/benjaminali/"
+						class="btn btn-primary"
+					>
+					<FaLinkedin />Connect</a>
+				</li>
+				<li style="margin: 5px;">
+					<a href="mailto:me@benjaminali.com" class="btn btn-primary">
+						<FaEnvelope />Get in touch
+					</a>
+				</li>
+				<li style="margin: 5px;">
+					<a href="https://your-cv-link.com" class="btn btn-primary">
+						<FaDownload />Download CV
+					</a>
+				</li>
+			</footer>
+		</main>
+	</body>
+</html>
+<style is:global>
+	:root {
+		--accent-dark: 0, 0, 0;
+		--accent-light: 255, 255, 255;
+		--accent-gradient: linear-gradient(
+			to right,
+			#ff9900,
+			#ffcc00 50%,
+			#ffff00 100%
+		);
+	}
+	main {
+		margin: auto;
+		padding: 1rem;
+		width: 800px;
+		max-width: calc(100% - 2rem);
+		color: white;
+		font-size: 20px;
+		line-height: 1.6;
+	}
+	html {
+		font-family: "JetBrains Mono", monospace;
+		background: #13151a;
+		background-image: linear-gradient(to right, #13151a, #13151a);
+		background-size: 224px;
+	}
+
+	code {
+		font-family:
+			Menlo,
+			Monaco,
+			Lucida Console,
+			Liberation Mono,
+			DejaVu Sans Mono,
+			Bitstream Vera Sans Mono,
+			Courier New,
+			monospace;
+	}
+	.astro-a {
+		position: absolute;
+		top: -32px;
+		left: 50%;
+		transform: translatex(-50%);
+		border-radius: 10px;
+
+		/* ... other styles */
+	}
+	.italic-date {
+		font-style: italic;
+	}
+	h1 {
+		font-size: 4rem;
+		font-weight: 700;
+		line-height: 1;
+		text-align: center;
+		margin-bottom: 1em;
+	}
+	.title-image h1 {
+		display: flex;
+		justify-content: center; /* Center horizontally */
+		align-items: center; /* Center vertically (optional, if you want vertical centering too) */
+	}
+	.title-image img {
+		width: 80px;
+		height: auto;
+		margin-right: 1rem;
+		border-radius: 50%;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+	}
+	.text-gradient {
+		background-image: var(--accent-gradient);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-size: 400%;
+		background-position: 0%;
+	}
+	.instructions-container {
+		max-width: 800px; /* Adjust as needed */
+		margin: 0 auto;
+		padding: 1.5rem; /* Center the container */
+	}
+	.instructions {
+		margin-bottom: 2rem;
+		border: 1px solid rgba(var(--accent-light), 25%);
+		background: linear-gradient(
+			rgba(var(--accent-dark), 66%),
+			rgba(var(--accent-dark), 33%)
+		);
+		color: white;
+		padding: 1.5rem;
+		border-radius: 8px;
+		text-align: center;
+	}
+	.instructions code {
+		font-size: 0.8em;
+		font-weight: bold;
+		background: rgba(var(--accent-light), 12%);
+		color: rgb(var(--accent-light));
+		border-radius: 4px;
+		padding: 0.3em 0.4em;
+	}
+	.instructions strong {
+		font-weight: bold;
+		background-image: var(--accent-gradient);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-size: 400%;
+		background-position: 0%;
+	}
+	@media (max-width: 768px) {
+		/* Adjust the breakpoint as needed */
+		.instructions-container {
+			padding: 1rem; /* Reduce padding on smaller screens */
+		}
+		.instructions .link-card-grid {
+			/* Target the grid directly */
+			display: flex;
+			flex-direction: column; /* Stack cards vertically */
+			gap: 1rem; /* Add spacing between cards */
+		}
+	}
+	.section-title {
+		text-align: center; /* Center the title */
+		margin-bottom: 1rem; /* Add space below the title */
+		font-size: 2rem; /* Adjust font size as needed */
+		font-weight: bold; /* Make the title bold */
+		color: white; /* Or any color that contrasts with your background */
+	}
+	.button-links { 
+     display: flex;
+     align-items: center; /* Vertically center icons and text */
+   }
+   .button-links li {
+	list-style: none;
+     margin: 5px; /* Adjust spacing between list items */
+   }
+   .button-links a {
+     display: flex;
+     align-items: center; /* Vertically center within each button */
+     gap: 5px; /* Adjust spacing between icon and text */
+   }
+	.btn {
+		/* Style your buttons as needed */
+		display: inline-block;
+		padding: 5px 15px;
+		border: 2px solid #ff9900; /* Fox color outline */
+		border-radius: 5px;
+		background-color: black; /* Black background */
+		color: white;
+		text-decoration: none;
+		transition: background-color 0.3s ease; /* Add transition for hover effect */
+	}
+	.btn:hover {
+		background-color: #ff9900; /* Change background color on hover */
+		color: white; /* Change text color on hover */
+	}
+	.btn-primary {
+		/* Style primary buttons */
+		background-color: black; /* Black background */
+		border: 2px solid #ff9900; /* Fox color outline */
+		color: white;
+		transition: background-color 0.3s ease; /* Add transition for hover effect */
+	}
+	.btn-primary:hover {
+		background-color: #ff9900; /* Change background color on hover */
+		color: white; /* Change text color on hover */
+	}
+	.btn i {
+		/* Add some space between icon and text */
+
+		color: white;
+	}
+	.link-card-grid {
+		display: grid;
+		grid-template-columns: repeat(
+			auto-fit,
+			minmax(250px, 1fr)
+		); /* Responsive columns */
+		gap: 1.5rem; /* Spacing between cards */
+	}
+	/* Optional: Style for individual cards if not already present */
+	.link-card {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+		padding: 1.5rem;
+		border: 1px solid rgba(var(--accent-light), 25%);
+		background: linear-gradient(
+			rgba(var(--accent-dark), 66%),
+			rgba(var(--accent-dark), 33%)
+		);
+		border-radius: 8px;
+	}
+
+	.date {
+		font-size: 16px;
+		color: #aaa;
+		margin-bottom: 1rem;
+	}
+	.content {
+		margin-top: 1rem;
+		text-align: left;
+		line-height: 1.6;
+	}
+	.content p {
+		margin-bottom: 1rem;
+	}
+	.content code {
+		background-color: #333;
+		color: #eee;
+		padding: 0.2rem 0.5rem;
+		border-radius: 4px;
+	}
+	.content pre {
+		background-color: #333;
+		color: #eee;
+		padding: 1rem;
+		border-radius: 4px;
+		overflow-x: auto;
+	}
+	.content ul {
+		list-style-type: disc !important;
+		margin-left: 20px !important;
+	}
+	.content h2 {
+		font-size: 1.5rem;
+		font-weight: bold;
+		margin-bottom: 1rem;
+		color: white;
+	}
+</style>

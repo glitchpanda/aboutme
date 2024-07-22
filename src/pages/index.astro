@@ -1,0 +1,44 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Card from "../components/Card.astro";
+---
+
+<Layout title="Benjamin Ali">
+	<main>
+
+		<a href="/blog" class="btn btn-primary" style="margin-left: 10px;"> 
+			<i class="fas fa-pen"></i> Read my blog
+		</a> 
+
+		<div class="instructions-container">
+			<h2 class="section-title">About Me</h2>
+			<p class="instructions">
+				I'm a <span class="text-gradient">security analyst</span>
+				with a passion for web development. I enjoy finding creative solutions
+				to security challenges and building user-friendly web applications.
+			</p>
+		</div>
+		<div class="instructions-container">
+			<h2 class="section-title">
+				<span class="text-white">Portfolio</span>
+			</h2>
+			<div class="instructions">
+				<ul role="list" class="link-card-grid">
+					<Card
+						href="https://timer.benjaminali.com/"
+						title="Pomodoro Timer"
+						body="Try my Pomodoro Timer."
+					/>
+
+					<Card
+						href="https://thoughts.benjaminali.com/"
+						title="Thoughts"
+						body="Add your thoughts"
+					/>
+				</ul>
+			</div>
+		</div>
+
+
+	</main>
+</Layout>
